@@ -1,0 +1,303 @@
+---
+---
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>PViewer - Monitor Danych</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .card.green {
+            border-top: 6px solid #10b981;
+        }
+
+        .card.blue {
+            border-top: 6px solid #3b82f6;
+        }
+
+        .card-label {
+            font-size: 1rem;
+            color: #6b7280;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .card-value {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .card.green .card-value {
+            color: #10b981;
+        }
+
+        .card.blue .card-value {
+            color: #3b82f6;
+        }
+
+        .card-subtitle {
+            font-size: 0.9rem;
+            color: #9ca3af;
+        }
+
+        .controls {
+            text-align: center;
+        }
+
+        button {
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            background: #667eea;
+            color: white;
+        }
+
+        button:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .status {
+            text-align: center;
+            margin-top: 20px;
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        .error {
+            background: #ef4444;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .success {
+            background: #10b981;
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s ease-in-out infinite;
+            border-radius: 4px;
+            height: 3.5rem;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PViewer - Monitor Danych</h1>
+
+        <div class="cards">
+            <div class="card green">
+                <div class="card-label">Wartość 1</div>
+                <div class="card-value" id="value1">-</div>
+                <div class="card-subtitle">measure-label #1</div>
+            </div>
+
+            <div class="card blue">
+                <div class="card-label">Wartość 2</div>
+                <div class="card-value" id="value2">-</div>
+                <div class="card-subtitle">measure-label #2</div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button id="refreshBtn">Odśwież</button>
+        </div>
+
+        <div id="status" class="status"></div>
+    </div>
+
+    <script>
+        const TARGET_URL = 'https://swiv.grupawp.pl/#olap_serwisy/4/N4IgbglgzgrghgGwgLzgFwgewHYgFwgDmAThACYgA0408SqGOAygKZobaFT7YwILUMAWxbIcLfCACiMYpgAOLAPQAFOKW7UAZhARoWxbngDaoNAE9Fk4ROrEWWyQH0nNqiBsqDWMkdMgyWXQsXAIVAEYAEXcofXl8cMFLCQItBExMewoAXwBdbMozZMlY0k53e0cCKAh9J2w4EXc4AGNGUJAIXGowRBgWPxAhcXMAOnkEdx0G7CgWUYB3eXHJ3OpsTDR8LUQ56ghCDfsAYTg57d2WPOooCdq/IqtqtDLCdzIIEVmQktqWesathAUEyWzwoEqknkYHcFiewO8A3eEHsbR+BDIAxaLGwH3K1EUpEwFAIIAKICQQlqCQADHTrgjSEiTBCHAYcdioTDtJkhOh8I8UgEHHA+Fsen0hWSkvCRGdZBICqytOzsJyCDAYFNefzwR5ihiRWL3L0EP1JNL9bKWPL7GS1iB5F1sCwyJFPjiajg/A6ndgXWQmKCuWSgA';
+
+        let isLoading = false;
+
+        const value1El = document.getElementById('value1');
+        const value2El = document.getElementById('value2');
+        const refreshBtn = document.getElementById('refreshBtn');
+        const statusEl = document.getElementById('status');
+
+        async function fetchData() {
+            if (isLoading) return;
+
+            isLoading = true;
+            refreshBtn.disabled = true;
+            refreshBtn.innerHTML = 'Ładowanie...<span class="loading"></span>';
+            statusEl.innerHTML = '';
+
+            // Show skeleton loading
+            value1El.innerHTML = '<div class="skeleton"></div>';
+            value2El.innerHTML = '<div class="skeleton"></div>';
+
+            try {
+                const response = await fetch(TARGET_URL, {
+                    method: 'GET',
+                    credentials: 'include', // Include cookies for VPN authentication
+                    mode: 'cors',
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const html = await response.text();
+
+                // Parse HTML to find measure-label divs
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const measureLabels = doc.querySelectorAll('.measure-label');
+
+                if (measureLabels.length >= 2) {
+                    const val1 = measureLabels[0].textContent.trim();
+                    const val2 = measureLabels[1].textContent.trim();
+
+                    // Format numbers with spaces for thousands
+                    value1El.textContent = formatNumber(val1);
+                    value2El.textContent = formatNumber(val2);
+
+                    statusEl.innerHTML = `<div class="success">Dane zaktualizowane: ${new Date().toLocaleTimeString('pl-PL')}</div>`;
+                } else {
+                    throw new Error('Nie znaleziono wymaganych elementów measure-label w HTML');
+                }
+
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                value1El.textContent = 'Błąd';
+                value2El.textContent = 'Błąd';
+
+                let errorMessage = 'Nie można pobrać danych. ';
+
+                if (error.message.includes('Failed to fetch') || error.name === 'TypeError') {
+                    errorMessage += 'Sprawdź czy jesteś połączony z VPN i czy masz dostęp do swiv.grupawp.pl';
+                } else {
+                    errorMessage += error.message;
+                }
+
+                statusEl.innerHTML = `<div class="error">${errorMessage}</div>`;
+            } finally {
+                isLoading = false;
+                refreshBtn.disabled = false;
+                refreshBtn.textContent = 'Odśwież';
+            }
+        }
+
+        function formatNumber(num) {
+            // Format number with spaces as thousands separator
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+        }
+
+        // Event listener for refresh button
+        refreshBtn.addEventListener('click', fetchData);
+
+        // Auto-load data on page load
+        fetchData();
+
+        // Optional: Auto-refresh every 5 minutes
+        // setInterval(fetchData, 5 * 60 * 1000);
+    </script>
+</body>
+</html>
