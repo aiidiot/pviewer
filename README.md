@@ -12,6 +12,8 @@ Prosta aplikacja webowa do monitorowania dwóch wartości z systemu SWIV Grupy W
 - [DEPLOYMENT.md](DEPLOYMENT.md) - Pełna instrukcja wdrożenia na Vercel
 - [GIT_COMMANDS.md](GIT_COMMANDS.md) - Przewodnik po komendach Git
 - [TESTING.md](TESTING.md) - Instrukcje testowania aplikacji
+- [ARCHITECTURE.md](ARCHITECTURE.md) - Architektura systemu i diagramy
+- [NEXT_STEPS.md](NEXT_STEPS.md) - Następne kroki po utworzeniu projektu
 
 ## Opis
 
