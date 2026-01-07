@@ -4,11 +4,9 @@ Simple data viewer.
 
 ## Usage
 
-Start server:
+Run updater (on computer with VPN):
 ```bash
-node server.cjs
+node update.cjs
 ```
 
-Open in browser: `http://localhost:3000`
-
-On mobile (same network): `http://[YOUR_IP]:3000`
+View on any device: https://aiidiot.github.io/pviewer/
