@@ -2,6 +2,17 @@
 
 Prosta aplikacja webowa do monitorowania dwóch wartości z systemu SWIV Grupy WP.
 
+## Szybki Start
+
+**Nowy użytkownik?** Zobacz [QUICKSTART.md](QUICKSTART.md) dla skróconej instrukcji wdrożenia.
+
+## Dokumentacja
+
+- [QUICKSTART.md](QUICKSTART.md) - Szybki przewodnik wdrożenia (5 minut)
+- [DEPLOYMENT.md](DEPLOYMENT.md) - Pełna instrukcja wdrożenia na Vercel
+- [GIT_COMMANDS.md](GIT_COMMANDS.md) - Przewodnik po komendach Git
+- [TESTING.md](TESTING.md) - Instrukcje testowania aplikacji
+
 ## Opis
 
 Aplikacja pobiera dane bezpośrednio z przeglądarki użytkownika (client-side fetch), dzięki czemu działa tylko gdy użytkownik jest zalogowany na VPN służbowym. Wyświetla dwie wartości `measure-label` w kolorowych kartach:
