@@ -15,10 +15,10 @@
             justify-content: center;
             padding: 20px;
         }
-        .container { max-width: 800px; width: 100%; }
+        .container { max-width: 1000px; width: 100%; }
         .cards {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
             margin-bottom: 20px;
         }
@@ -32,6 +32,7 @@
         .card:hover { transform: translateY(-5px); }
         .card.green { border-top: 5px solid #38ef7d; }
         .card.blue { border-top: 5px solid #00f2fe; }
+        .card.purple { border-top: 5px solid #a29bfe; }
         .card-label {
             font-size: 0.9rem;
             font-weight: 600;
@@ -42,7 +43,7 @@
             color: #333;
         }
         .card-value {
-            font-size: 3.5rem;
+            font-size: 3rem;
             font-weight: 700;
             margin-bottom: 10px;
         }
@@ -56,6 +57,16 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+        .card.purple .card-value {
+            background: linear-gradient(90deg, #a29bfe 0%, #6c5ce7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .card-footer {
+            font-size: 0.75rem;
+            opacity: 0.5;
+            margin-top: 10px;
+        }
         .timestamp {
             text-align: center;
             color: white;
@@ -68,16 +79,23 @@
     <div class="container">
         <div class="cards">
             <div class="card green">
-                <div class="card-label">m.pl</div>
-                <div class="card-value">2 768 845</div>
+                <div class="card-label">Money.pl</div>
+                <div class="card-value">2 772 422</div>
+                <div class="card-footer">08.01, 21:54</div>
             </div>
             <div class="card blue">
-                <div class="card-label">f.pl</div>
-                <div class="card-value">1 021 107</div>
+                <div class="card-label">Finanse.wp.pl</div>
+                <div class="card-value">1 022 394</div>
+                <div class="card-footer">08.01, 21:54</div>
+            </div>
+            <div class="card purple">
+                <div class="card-label">∑ Suma</div>
+                <div class="card-value">3 794 816</div>
+                <div class="card-footer">08.01, 21:54</div>
             </div>
         </div>
         <div class="timestamp">
-            Ostatnia aktualizacja: 8.01.2026, 21:53:11
+            Ostatnia aktualizacja: 8.01.2026, 21:54:28
         </div>
     </div>
 </body>
