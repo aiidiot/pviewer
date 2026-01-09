@@ -72,6 +72,99 @@
             color: white;
             opacity: 0.8;
             font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        /* Historia - Ostatni odczyt przed północą */
+        .last-midnight {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            color: white;
+        }
+        .section-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            margin-bottom: 12px;
+            opacity: 0.9;
+            text-transform: uppercase;
+        }
+        .midnight-date {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            opacity: 0.95;
+        }
+        .midnight-data {
+            background: rgba(0, 0, 0, 0.15);
+            padding: 15px;
+            border-radius: 10px;
+        }
+        .midnight-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 8px 0;
+            font-size: 0.95rem;
+        }
+        .midnight-row.midnight-sum {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        .midnight-label {
+            opacity: 0.85;
+        }
+        .midnight-value {
+            font-weight: 600;
+            font-family: monospace;
+        }
+
+        /* Dzisiejsze odczyty */
+        .today-readings {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            color: white;
+        }
+        .readings-scroll {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            max-height: 200px;
+            overflow-y: auto;
+            font-family: monospace;
+        }
+        .readings-scroll::-webkit-scrollbar {
+            width: 8px;
+        }
+        .readings-scroll::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+        .readings-scroll::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+        }
+        .readings-scroll::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+        .reading-entry {
+            padding: 6px 0;
+            font-size: 0.9rem;
+            opacity: 0.9;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .reading-entry:last-child {
+            border-bottom: none;
         }
     </style>
 </head>
@@ -80,22 +173,33 @@
         <div class="cards">
             <div class="card green">
                 <div class="card-label">m.pl</div>
-                <div class="card-value">1 285 370</div>
-                <div class="card-footer">09.01, 12:49</div>
+                <div class="card-value">1 315 628</div>
+                <div class="card-footer">09.01, 12:56</div>
             </div>
             <div class="card blue">
-                <div class="card-label">F.pl</div>
-                <div class="card-value">471 311</div>
-                <div class="card-footer">09.01, 12:49</div>
+                <div class="card-label">f.pl</div>
+                <div class="card-value">476 966</div>
+                <div class="card-footer">09.01, 12:56</div>
             </div>
             <div class="card purple">
                 <div class="card-label">∑ Suma</div>
-                <div class="card-value">1 756 681</div>
-                <div class="card-footer">09.01, 12:49</div>
+                <div class="card-value">1 792 594</div>
+                <div class="card-footer">09.01, 12:56</div>
             </div>
         </div>
+
+        
+
+        
+        <div class="today-readings">
+            <div class="section-title">DZISIEJSZE ODCZYTY:</div>
+            <div class="readings-scroll">
+                <div class="reading-entry">12:56 - 1 315 628 / 476 966 = 1 792 594</div>
+            </div>
+        </div>
+
         <div class="timestamp">
-            Ostatnia aktualizacja: 9.01.2026, 12:49:34
+            Ostatnia aktualizacja: 9.01.2026, 12:56:04
         </div>
     </div>
 </body>
