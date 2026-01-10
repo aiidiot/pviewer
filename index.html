@@ -3,272 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PViewer</title>
+    <title>Live Dashboard</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            background-color: #000;
+            color: #fff;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            margin: 0;
             padding: 20px;
-        }
-        .container { max-width: 1000px; width: 100%; }
-
-        /* WP Metrics Circle */
-        .wp-metric-circle {
-            background: rgba(255, 255, 255, 0.95);
-            width: 140px;
-            height: 140px;
-            border-radius: 50%;
             display: flex;
             flex-direction: column;
             align-items: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 400px;
+        }
+        /* Nowe style dla kółka na górze */
+        .metrics-circle-container {
+            display: flex;
             justify-content: center;
-            margin: 0 auto 25px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-            border: 4px solid rgba(255, 255, 255, 0.4);
+            margin-bottom: 30px;
+            margin-top: 10px;
         }
-        .circle-value {
-            font-size: 2rem;
-            font-weight: 700;
-            background: linear-gradient(90deg, #f093fb 0%, #f5576c 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 5px;
+        .metrics-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 4px solid #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: #4CAF50;
+            background: #111;
+            box-shadow: 0 0 20px rgba(76, 175, 80, 0.2);
+            position: relative;
         }
-        .circle-label {
-            font-size: 0.7rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+        .metrics-circle::after {
+            content: 'WP Metrics';
+            position: absolute;
+            bottom: -25px;
+            font-size: 12px;
             color: #666;
+            white-space: nowrap;
         }
 
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
+        /* Paski - zmniejszona wysokość o 50% */
+        .bar-container {
+            margin-bottom: 25px; /* compact */
         }
-        .card {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            transition: transform 0.3s ease;
-        }
-        .card:hover { transform: translateY(-3px); }
-        .card.green { border-top: 4px solid #38ef7d; }
-        .card.blue { border-top: 4px solid #00f2fe; }
-        .card.purple { border-top: 4px solid #a29bfe; }
-        .card-label {
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            margin-bottom: 10px;
-            opacity: 0.6;
-            color: #333;
-        }
-        .card-value {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-        .card.green .card-value {
-            background: linear-gradient(90deg, #11998e 0%, #38ef7d 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .card.blue .card-value {
-            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .card.purple .card-value {
-            background: linear-gradient(90deg, #a29bfe 0%, #6c5ce7 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .card-footer {
-            font-size: 0.65rem;
-            opacity: 0.5;
-            margin-top: 8px;
-        }
-        .timestamp {
-            text-align: center;
-            color: white;
-            opacity: 0.8;
-            font-size: 0.85rem;
-            margin-bottom: 20px;
-        }
-
-        /* Historia - Ostatni odczyt przed północą */
-        .last-midnight {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 20px;
-            color: white;
-        }
-        .section-title {
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 1.2px;
-            margin-bottom: 10px;
-            opacity: 0.9;
-            text-transform: uppercase;
-        }
-        .midnight-date {
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 12px;
-            opacity: 0.95;
-        }
-        .midnight-data {
-            background: rgba(0, 0, 0, 0.15);
-            padding: 12px;
-            border-radius: 10px;
-        }
-        .midnight-row {
+        .bar-label {
             display: flex;
             justify-content: space-between;
-            margin: 6px 0;
-            font-size: 0.85rem;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #ccc;
         }
-        .midnight-row.midnight-sum {
-            margin-top: 10px;
-            padding-top: 10px;
-            border-top: 1px solid rgba(255, 255, 255, 0.3);
-            font-weight: 700;
-            font-size: 1rem;
+        .bar-bg {
+            background: #222;
+            height: 12px; /* Połowa z normalnych ~24px */
+            border-radius: 6px;
+            overflow: hidden;
         }
-        .midnight-label {
-            opacity: 0.85;
+        .bar-fill {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 0.5s ease;
         }
-        .midnight-value {
-            font-weight: 600;
-            font-family: monospace;
-        }
+        .bar-fill.v1 { background: linear-gradient(90deg, #2196F3, #64B5F6); }
+        .bar-fill.v2 { background: linear-gradient(90deg, #9C27B0, #BA68C8); }
+        .bar-fill.sum { background: linear-gradient(90deg, #009688, #4DB6AC); }
 
-        /* Dzisiejsze odczyty */
-        .today-readings {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 20px;
-            color: white;
+        .value-large {
+            font-size: 18px;
+            font-weight: bold;
         }
-        .readings-scroll {
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 10px;
-            padding: 12px;
-            max-height: 200px;
-            overflow-y: auto;
-            font-family: monospace;
-        }
-        .readings-scroll::-webkit-scrollbar {
-            width: 8px;
-        }
-        .readings-scroll::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-        }
-        .readings-scroll::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 4px;
-        }
-        .readings-scroll::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 255, 255, 0.5);
-        }
-        .reading-entry {
-            padding: 5px 0;
-            font-size: 0.8rem;
-            opacity: 0.9;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        .reading-entry:last-child {
-            border-bottom: none;
-        }
-
-        /* Mobile optimizations */
-        @media (max-width: 768px) {
-            .wp-metric-circle {
-                width: 110px;
-                height: 110px;
-                margin-bottom: 20px;
-            }
-            .circle-value {
-                font-size: 1.5rem;
-            }
-            .circle-label {
-                font-size: 0.6rem;
-            }
-            .card {
-                padding: 15px;
-            }
-            .card-value {
-                font-size: 1.6rem;
-            }
-            .card-label {
-                font-size: 0.7rem;
-            }
-            .card-footer {
-                font-size: 0.6rem;
-            }
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            color: #444;
+            font-size: 10px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        
+        <!-- Circular Metric -->
+        <div class="metrics-circle-container">
+            <div class="metrics-circle">15.59k</div>
+        </div>
 
-        <div class="cards">
-            <div class="card green">
-                <div class="card-label">m.pl</div>
-                <div class="card-value">9 474</div>
-                <div class="card-footer">11.01, 00:08</div>
+        <!-- Bars (Compact) -->
+        <div class="bar-container">
+            <div class="bar-label">
+                <span>Money.pl</span>
+                <span class="value-large">14616</span>
             </div>
-            <div class="card blue">
-                <div class="card-label">f.pl</div>
-                <div class="card-value">2 159</div>
-                <div class="card-footer">11.01, 00:08</div>
-            </div>
-            <div class="card purple">
-                <div class="card-label">∑ Suma</div>
-                <div class="card-value">11 633</div>
-                <div class="card-footer">11.01, 00:08</div>
+            <div class="bar-bg">
+                <div class="bar-fill v1" style="width: 0.3654%"></div>
             </div>
         </div>
 
-        
-        <div class="last-midnight">
-            <div class="section-title">OSTATNI ODCZYT WCZORAJ:</div>
-            <div class="midnight-date">10.01.2026, 23:57</div>
-            <div class="midnight-data">
-                <div class="midnight-row"><span class="midnight-label">m.pl:</span> <span class="midnight-value">1 902 180</span></div>
-                <div class="midnight-row"><span class="midnight-label">f.pl:</span> <span class="midnight-value">1 162 243</span></div>
-                <div class="midnight-row midnight-sum"><span class="midnight-label">suma:</span> <span class="midnight-value">3 064 423</span></div>
+        <div class="bar-container">
+            <div class="bar-label">
+                <span>WP Finanse</span>
+                <span class="value-large">5189</span>
+            </div>
+            <div class="bar-bg">
+                <div class="bar-fill v2" style="width: 0.129725%"></div>
             </div>
         </div>
 
-        
-        <div class="today-readings">
-            <div class="section-title">DZISIEJSZE ODCZYTY:</div>
-            <div class="readings-scroll">
-                <div class="reading-entry">00:08 - 9 474 / 2 159 = 11 633</div><div class="reading-entry">00:08 - 9 474 / 2 159 = 11 633</div><div class="reading-entry">00:08 - 9 474 / 2 159 = 11 633</div><div class="reading-entry">00:06 - 5 779 / 2 128 = 7 907</div><div class="reading-entry">00:06 - 1 902 180 / 1 162 243 = 3 064 423</div>
+         <div class="bar-container" style="margin-top: 30px;">
+            <div class="bar-label">
+                <span style="color: #fff">SUMA</span>
+                <span class="value-large" style="color: #4DB6AC">19 805</span>
+            </div>
+            <div class="bar-bg">
+                <div class="bar-fill sum" style="width: 0.495125%"></div>
             </div>
         </div>
 
-        <div class="timestamp">
-            Ostatnia aktualizacja: 11.01.2026, 00:08:51
+        <div class="footer">
+            Ostatnia aktualizacja: 00:16:44
         </div>
     </div>
 </body>
