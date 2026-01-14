@@ -1,285 +1,285 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live Dashboard</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐕</text></svg>">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Live Dashboard</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐕</text></svg>">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-        body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            min-height: 100vh;
-            padding: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+body {
+background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+min-height: 100vh;
+padding: 15px;
+display: flex;
+align-items: center;
+justify-content: center;
+}
 
-        .container {
-            width: 100%;
-            max-width: 420px;
-        }
+.container {
+width: 100%;
+max-width: 420px;
+}
 
-        /* Night Mode Banner - 🐕💤 SLEEPING DOG */
-        .night-banner {
-            background: rgba(255, 152, 0, 0.25);
-            border: 2px solid rgba(255, 152, 0, 0.6);
-            border-radius: 12px;
-            padding: 12px 18px;
-            margin-bottom: 18px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 15px rgba(255, 152, 0, 0.2);
-        }
+/* Night Mode Banner - 🐕💤 SLEEPING DOG */
+.night-banner {
+background: rgba(255, 152, 0, 0.25);
+border: 2px solid rgba(255, 152, 0, 0.6);
+border-radius: 12px;
+padding: 12px 18px;
+margin-bottom: 18px;
+backdrop-filter: blur(10px);
+box-shadow: 0 4px 15px rgba(255, 152, 0, 0.2);
+}
 
-        .night-content {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-        }
+.night-content {
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 12px;
+}
 
-        .night-icon {
-            font-size: 48px;
-            animation: pulse 2s ease-in-out infinite;
-        }
+.night-icon {
+font-size: 48px;
+animation: pulse 2s ease-in-out infinite;
+}
 
-        .night-text {
-            color: #fff;
-            font-size: 14px;
-            font-weight: 600;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
+.night-text {
+color: #fff;
+font-size: 14px;
+font-weight: 600;
+text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.1); opacity: 0.8; }
-        }
+@keyframes pulse {
+0%, 100% { transform: scale(1); opacity: 1; }
+50% { transform: scale(1.1); opacity: 0.8; }
+}
 
-        /* WP Metrics Circle Badge */
-        .metrics-badge {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
+/* WP Metrics Circle Badge */
+.metrics-badge {
+display: flex;
+justify-content: center;
+margin-bottom: 20px;
+}
 
-        .metrics-circle {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 50%;
-            width: 90px;
-            height: 90px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-            border: 3px solid rgba(118, 75, 162, 0.3);
-        }
+.metrics-circle {
+background: rgba(255, 255, 255, 0.95);
+border-radius: 50%;
+width: 90px;
+height: 90px;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+border: 3px solid rgba(118, 75, 162, 0.3);
+}
 
-        .metrics-value {
-            font-size: 20px;
-            font-weight: bold;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
+.metrics-value {
+font-size: 20px;
+font-weight: bold;
+background: linear-gradient(135deg, #667eea, #764ba2);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+}
 
-        .metrics-label {
-            font-size: 9px;
-            color: #999;
-            margin-top: 2px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
+.metrics-label {
+font-size: 9px;
+color: #999;
+margin-top: 2px;
+text-transform: uppercase;
+letter-spacing: 0.5px;
+}
 
-        /* Yesterday Section */
-        .midnight-section {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 18px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
+/* Yesterday Section */
+.midnight-section {
+background: rgba(255, 255, 255, 0.15);
+backdrop-filter: blur(10px);
+border: 1px solid rgba(255, 255, 255, 0.3);
+border-radius: 12px;
+padding: 15px;
+margin-bottom: 18px;
+box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
 
-        .section-header {
-            font-size: 10px;
-            color: rgba(255, 255, 255, 0.9);
-            font-weight: 600;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
+.section-header {
+font-size: 10px;
+color: rgba(255, 255, 255, 0.9);
+font-weight: 600;
+letter-spacing: 1px;
+margin-bottom: 10px;
+text-transform: uppercase;
+}
 
-        .midnight-date {
-            font-size: 11px;
-            color: rgba(255, 255, 255, 0.8);
-            margin-bottom: 8px;
-        }
+.midnight-date {
+font-size: 11px;
+color: rgba(255, 255, 255, 0.8);
+margin-bottom: 8px;
+}
 
-        .midnight-values {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
+.midnight-values {
+display: flex;
+flex-direction: column;
+gap: 5px;
+}
 
-        .midnight-item {
-            display: flex;
-            justify-content: space-between;
-            font-size: 12px;
-        }
+.midnight-item {
+display: flex;
+justify-content: space-between;
+font-size: 12px;
+}
 
-        .midnight-label {
-            color: rgba(255, 255, 255, 0.7);
-        }
+.midnight-label {
+color: rgba(255, 255, 255, 0.7);
+}
 
-        .midnight-value {
-            color: #fff;
-            font-weight: 600;
-        }
+.midnight-value {
+color: #fff;
+font-weight: 600;
+}
 
-        .midnight-sum {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 5px;
-            padding-top: 8px;
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-        }
+.midnight-sum {
+display: flex;
+justify-content: space-between;
+margin-top: 5px;
+padding-top: 8px;
+border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
 
-        .midnight-sum-value {
-            color: #fff;
-            font-weight: bold;
-            font-size: 14px;
-        }
+.midnight-sum-value {
+color: #fff;
+font-weight: bold;
+font-size: 14px;
+}
 
-        /* Data Cards */
-        .card {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 12px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-            position: relative;
-            overflow: hidden;
-        }
+/* Data Cards */
+.card {
+background: rgba(255, 255, 255, 0.95);
+border-radius: 12px;
+padding: 20px;
+margin-bottom: 12px;
+box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+position: relative;
+overflow: hidden;
+}
 
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-        }
+.card::before {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+height: 4px;
+}
 
-        .card.source1::before { background: linear-gradient(90deg, #4CAF50, #45a049); }
-        .card.source2::before { background: linear-gradient(90deg, #2196F3, #1976D2); }
-        .card.suma::before { background: linear-gradient(90deg, #9C27B0, #7B1FA2); }
+.card.source1::before { background: linear-gradient(90deg, #4CAF50, #45a049); }
+.card.source2::before { background: linear-gradient(90deg, #2196F3, #1976D2); }
+.card.suma::before { background: linear-gradient(90deg, #9C27B0, #7B1FA2); }
 
-        .card-label {
-            font-size: 11px;
-            color: #666;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
+.card-label {
+font-size: 11px;
+color: #666;
+text-transform: uppercase;
+letter-spacing: 1px;
+margin-bottom: 8px;
+font-weight: 600;
+}
 
-        .card-value {
-            font-size: 28px;
-            font-weight: bold;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
+.card-value {
+font-size: 28px;
+font-weight: bold;
+background: linear-gradient(135deg, #667eea, #764ba2);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+}
 
-        /* Footer */
-        .footer {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 10px;
-            color: rgba(255, 255, 255, 0.7);
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-        }
+/* Footer */
+.footer {
+text-align: center;
+margin-top: 20px;
+font-size: 10px;
+color: rgba(255, 255, 255, 0.7);
+text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
 
-        /* Mobile Optimization */
-        @media (max-width: 480px) {
-            body { padding: 10px; }
-            .night-banner { padding: 10px 15px; margin-bottom: 15px; }
-            .night-icon { font-size: 24px; }
-            .night-text { font-size: 13px; }
-            .metrics-circle { width: 75px; height: 75px; }
-            .metrics-value { font-size: 18px; }
-            .metrics-label { font-size: 8px; }
-            .midnight-section { padding: 12px; margin-bottom: 15px; }
-            .card { padding: 15px; margin-bottom: 10px; }
-            .card-value { font-size: 24px; }
-            .footer { margin-top: 15px; }
-        }
-    </style>
+/* Mobile Optimization */
+@media (max-width: 480px) {
+body { padding: 10px; }
+.night-banner { padding: 10px 15px; margin-bottom: 15px; }
+.night-icon { font-size: 24px; }
+.night-text { font-size: 13px; }
+.metrics-circle { width: 75px; height: 75px; }
+.metrics-value { font-size: 18px; }
+.metrics-label { font-size: 8px; }
+.midnight-section { padding: 12px; margin-bottom: 15px; }
+.card { padding: 15px; margin-bottom: 10px; }
+.card-value { font-size: 24px; }
+.footer { margin-top: 15px; }
+}
+</style>
 </head>
 <body>
-    <div class="container">
-        
+<div class="container">
 
-        <div class="metrics-badge">
-            <div class="metrics-circle">
-                <div class="metrics-value">20,000.00%</div>
-                <div class="metrics-label">MatrixScore</div>
-            </div>
-        </div>
 
-        
-        <div class="card source1">
-            <div class="card-label">m.pl</div>
-            <div class="card-value">19276</div>
-        </div>
+<div class="metrics-badge">
+<div class="metrics-circle">
+<div class="metrics-value">14.76k</div>
+<div class="metrics-label">MatrixScore</div>
+</div>
+</div>
 
-        <div class="card source2">
-            <div class="card-label">f.pl</div>
-            <div class="card-value">6005</div>
-        </div>
 
-        <div class="card suma">
-            <div class="card-label">SUMA</div>
-            <div class="card-value">25 281</div>
-        </div>
-        
+<div class="card source1">
+<div class="card-label">m.pl</div>
+<div class="card-value">20469</div>
+</div>
 
-        
-            <div class="midnight-section">
-                <div class="section-header">OSTATNI ODCZYT WCZORAJ</div>
-                <div class="midnight-content">
-                    <div class="midnight-date">śr., 14.01, 23:52</div>
-                    <div class="midnight-values">
-                        <div class="midnight-item">
-                            <span class="midnight-label">m.pl</span>
-                            <span class="midnight-value">2 804 253</span>
-                        </div>
-                        <div class="midnight-item">
-                            <span class="midnight-label">f.pl</span>
-                            <span class="midnight-value">785 129</span>
-                        </div>
-                        <div class="midnight-sum">
-                            <span class="midnight-label">SUMA</span>
-                            <span class="midnight-sum-value">3 589 382</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<div class="card source2">
+<div class="card-label">f.pl</div>
+<div class="card-value">6402</div>
+</div>
 
-        <div class="footer">
-            Ostatnia aktualizacja: 00:25:15
-        </div>
+<div class="card suma">
+<div class="card-label">SUMA</div>
+<div class="card-value">26 871</div>
+</div>
 
-        <div style="text-align: center; margin-top: 8px; font-size: 8px; color: rgba(255, 255, 255, 0.3);">
-            Pview 4.1 SleepingDog by KaBOOMer
-        </div>
-    </div>
+
+
+<div class="midnight-section">
+<div class="section-header">OSTATNI ODCZYT WCZORAJ</div>
+<div class="midnight-content">
+<div class="midnight-date">śr., 14.01, 23:52</div>
+<div class="midnight-values">
+<div class="midnight-item">
+<span class="midnight-label">m.pl</span>
+<span class="midnight-value">2 804 253</span>
+</div>
+<div class="midnight-item">
+<span class="midnight-label">f.pl</span>
+<span class="midnight-value">785 129</span>
+</div>
+<div class="midnight-sum">
+<span class="midnight-label">SUMA</span>
+<span class="midnight-sum-value">3 589 382</span>
+</div>
+</div>
+</div>
+</div>
+
+<div class="footer">
+Ostatnia aktualizacja: 00:27:11
+</div>
+
+<div style="text-align: center; margin-top: 8px; font-size: 8px; color: rgba(255, 255, 255, 0.3);">
+Pview 4.1 SleepingDog by KaBOOMer
+</div>
+</div>
 </body>
 </html>
