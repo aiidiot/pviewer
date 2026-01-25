@@ -61,7 +61,8 @@ text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 /* WP Metrics Circle Badge */
 .metrics-badge {
 display: flex;
-justify-content: center;
+flex-direction: column;
+align-items: center;
 margin-bottom: 20px;
 }
 
@@ -76,6 +77,13 @@ align-items: center;
 justify-content: center;
 box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 border: 3px solid rgba(118, 75, 162, 0.3);
+transition: all 0.3s ease;
+}
+
+.metrics-circle.disconnected {
+opacity: 0.5;
+filter: grayscale(60%);
+border-color: rgba(136, 136, 136, 0.5);
 }
 
 .metrics-value {
@@ -93,6 +101,33 @@ color: #999;
 margin-top: 2px;
 text-transform: uppercase;
 letter-spacing: 0.5px;
+}
+
+/* Connection Status Indicator */
+.connection-status {
+display: flex;
+align-items: center;
+gap: 4px;
+margin-top: 8px;
+padding: 4px 10px;
+background: rgba(255, 255, 255, 0.2);
+border-radius: 12px;
+font-size: 10px;
+color: rgba(255, 255, 255, 0.9);
+}
+
+.connection-status.connected {
+background: rgba(76, 175, 80, 0.3);
+border: 1px solid rgba(76, 175, 80, 0.5);
+}
+
+.connection-status.disconnected {
+background: rgba(136, 136, 136, 0.3);
+border: 1px solid rgba(136, 136, 136, 0.5);
+}
+
+.connection-status svg {
+flex-shrink: 0;
 }
 
 /* Yesterday Section */
@@ -180,13 +215,29 @@ height: 4px;
 .card.source2::before { background: linear-gradient(90deg, #2196F3, #1976D2); }
 .card.suma::before { background: linear-gradient(90deg, #9C27B0, #7B1FA2); }
 
+.card.disconnected {
+opacity: 0.6;
+filter: grayscale(40%);
+}
+
+.card-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 8px;
+}
+
 .card-label {
 font-size: 11px;
 color: #666;
 text-transform: uppercase;
 letter-spacing: 1px;
-margin-bottom: 8px;
 font-weight: 600;
+}
+
+.card-status {
+display: flex;
+align-items: center;
 }
 
 .card-value {
@@ -205,6 +256,13 @@ margin-top: 20px;
 font-size: 10px;
 color: rgba(255, 255, 255, 0.7);
 text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Sources connection status bar */
+.sources-status {
+display: flex;
+justify-content: center;
+margin-bottom: 15px;
 }
 
 /* Mobile Optimization */
@@ -228,26 +286,46 @@ body { padding: 10px; }
 
 
 <div class="metrics-badge">
-<div class="metrics-circle">
+<div class="metrics-circle disconnected">
 <div class="metrics-value">34.05k</div>
 <div class="metrics-label">MatrixScore</div>
 </div>
+<div class="connection-status disconnected">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="#888"><path d="M19.78 22.61l-1.63-1.63c-.05 0-.1.02-.15.02h-3v-3.88l-2-2V22h-2v-8.88l-8-8L4.41 3.5 22.36 21.5l-2.58 1.11zM12 6c0-.55.45-1 1-1h2V3h-2c-1.1 0-2 .9-2 2v.88l2 2V6zm4 4h2c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-2v2h2v2h-2v2z"/></svg>
+<span>Offline</span>
+</div>
 </div>
 
 
-<div class="card source1">
+<div class="sources-status">
+<div class="connection-status connected">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="#4CAF50"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+<span>Dane Online</span>
+</div>
+</div>
+
+<div class="card source1 ">
+<div class="card-header">
 <div class="card-label">m.pl</div>
-<div class="card-value">3257249</div>
+<div class="card-status"><svg width="16" height="16" viewBox="0 0 24 24" fill="#4CAF50"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></div>
+</div>
+<div class="card-value">3276043</div>
 </div>
 
-<div class="card source2">
+<div class="card source2 ">
+<div class="card-header">
 <div class="card-label">f.pl</div>
-<div class="card-value">1002060</div>
+<div class="card-status"><svg width="16" height="16" viewBox="0 0 24 24" fill="#4CAF50"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></div>
+</div>
+<div class="card-value">1005116</div>
 </div>
 
-<div class="card suma">
+<div class="card suma ">
+<div class="card-header">
 <div class="card-label">SUMA</div>
-<div class="card-value">4 259 309</div>
+<div class="card-status"><svg width="16" height="16" viewBox="0 0 24 24" fill="#4CAF50"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></div>
+</div>
+<div class="card-value">4 281 159</div>
 </div>
 
 
@@ -255,30 +333,30 @@ body { padding: 10px; }
 <div class="midnight-section">
 <div class="section-header">OSTATNI ODCZYT WCZORAJ</div>
 <div class="midnight-content">
-<div class="midnight-date">niedz., 25.01, 23:35</div>
+<div class="midnight-date">niedz., 25.01, 23:45</div>
 <div class="midnight-values">
 <div class="midnight-item">
 <span class="midnight-label">m.pl</span>
-<span class="midnight-value">3 257 249</span>
+<span class="midnight-value">3 276 043</span>
 </div>
 <div class="midnight-item">
 <span class="midnight-label">f.pl</span>
-<span class="midnight-value">1 002 060</span>
+<span class="midnight-value">1 005 116</span>
 </div>
 <div class="midnight-sum">
 <span class="midnight-label">SUMA</span>
-<span class="midnight-sum-value">4 259 309</span>
+<span class="midnight-sum-value">4 281 159</span>
 </div>
 </div>
 </div>
 </div>
 
 <div class="footer">
-Ostatnia aktualizacja: 23:35:12
+Ostatnia aktualizacja: 23:45:57
 </div>
 
 <div style="text-align: center; margin-top: 8px; font-size: 8px; color: rgba(255, 255, 255, 0.3);">
-Pview 4.1 SleepingDog by KaBOOMer
+Pview 4.2 SleepingDog by KaBOOMer
 </div>
 </div>
 </body>
