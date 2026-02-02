@@ -4,360 +4,120 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Live Dashboard</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐕</text></svg>">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
-
 body {
-background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-min-height: 100vh;
-padding: 15px;
-display: flex;
-align-items: center;
-justify-content: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    min-height: 100vh;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-
-.container {
-width: 100%;
-max-width: 420px;
-}
-
-/* Night Mode Banner - 🐕💤 SLEEPING DOG */
-.night-banner {
-background: rgba(255, 152, 0, 0.25);
-border: 2px solid rgba(255, 152, 0, 0.6);
-border-radius: 12px;
-padding: 12px 18px;
-margin-bottom: 18px;
-backdrop-filter: blur(10px);
-box-shadow: 0 4px 15px rgba(255, 152, 0, 0.2);
-}
-
-.night-content {
-display: flex;
-align-items: center;
-justify-content: center;
-gap: 12px;
-}
-
-.night-icon {
-font-size: 48px;
-animation: pulse 2s ease-in-out infinite;
-}
-
-.night-text {
-color: #fff;
-font-size: 14px;
-font-weight: 600;
-text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-@keyframes pulse {
-0%, 100% { transform: scale(1); opacity: 1; }
-50% { transform: scale(1.1); opacity: 0.8; }
-}
-
-/* WP Metrics Circle Badge */
-.metrics-badge {
-display: flex;
-flex-direction: column;
-align-items: center;
-margin-bottom: 20px;
-}
-
-.metrics-circle {
-background: rgba(255, 255, 255, 0.95);
-border-radius: 50%;
-width: 90px;
-height: 90px;
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
-box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-border: 3px solid rgba(118, 75, 162, 0.3);
-transition: all 0.3s ease;
-}
-
-.metrics-circle.disconnected {
-opacity: 0.5;
-filter: grayscale(60%);
-border-color: rgba(136, 136, 136, 0.5);
-}
-
-.metrics-value {
-font-size: 20px;
-font-weight: bold;
-background: linear-gradient(135deg, #667eea, #764ba2);
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-background-clip: text;
-}
-
-.metrics-label {
-font-size: 9px;
-color: #999;
-margin-top: 2px;
-text-transform: uppercase;
-letter-spacing: 0.5px;
-}
-
-/* Connection Status Indicator */
-.connection-status {
-display: flex;
-align-items: center;
-gap: 4px;
-margin-top: 8px;
-padding: 4px 10px;
-background: rgba(255, 255, 255, 0.2);
-border-radius: 12px;
-font-size: 10px;
-color: rgba(255, 255, 255, 0.9);
-}
-
-.connection-status.connected {
-background: rgba(76, 175, 80, 0.3);
-border: 1px solid rgba(76, 175, 80, 0.5);
-}
-
-.connection-status.disconnected {
-background: rgba(136, 136, 136, 0.3);
-border: 1px solid rgba(136, 136, 136, 0.5);
-}
-
-.connection-status svg {
-flex-shrink: 0;
-}
-
-/* Yesterday Section */
-.midnight-section {
-background: rgba(255, 255, 255, 0.15);
-backdrop-filter: blur(10px);
-border: 1px solid rgba(255, 255, 255, 0.3);
-border-radius: 12px;
-padding: 15px;
-margin-bottom: 18px;
-box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-.section-header {
-font-size: 10px;
-color: rgba(255, 255, 255, 0.9);
-font-weight: 600;
-letter-spacing: 1px;
-margin-bottom: 10px;
-text-transform: uppercase;
-}
-
-.midnight-date {
-font-size: 11px;
-color: rgba(255, 255, 255, 0.8);
-margin-bottom: 8px;
-}
-
-.midnight-values {
-display: flex;
-flex-direction: column;
-gap: 5px;
-}
-
-.midnight-item {
-display: flex;
-justify-content: space-between;
-font-size: 12px;
-}
-
-.midnight-label {
-color: rgba(255, 255, 255, 0.7);
-}
-
-.midnight-value {
-color: #fff;
-font-weight: 600;
-}
-
-.midnight-sum {
-display: flex;
-justify-content: space-between;
-margin-top: 5px;
-padding-top: 8px;
-border-top: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.midnight-sum-value {
-color: #fff;
-font-weight: bold;
-font-size: 14px;
-}
-
-/* Data Cards */
+.container { max-width: 400px; width: 100%; }
 .card {
-background: rgba(255, 255, 255, 0.95);
-border-radius: 12px;
-padding: 20px;
-margin-bottom: 12px;
-box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-position: relative;
-overflow: hidden;
+    background: rgba(255,255,255,0.95);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 12px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
 }
-
-.card::before {
-content: '';
-position: absolute;
-top: 0;
-left: 0;
-right: 0;
-height: 4px;
-}
-
-.card.source1::before { background: linear-gradient(90deg, #4CAF50, #45a049); }
-.card.source2::before { background: linear-gradient(90deg, #2196F3, #1976D2); }
-.card.suma::before { background: linear-gradient(90deg, #9C27B0, #7B1FA2); }
-
-.card.disconnected {
-opacity: 0.6;
-filter: grayscale(40%);
-}
-
+.card.offline { opacity: 0.5; }
 .card-header {
-display: flex;
-justify-content: space-between;
-align-items: center;
-margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
 }
-
 .card-label {
-font-size: 11px;
-color: #666;
-text-transform: uppercase;
-letter-spacing: 1px;
-font-weight: 600;
+    font-size: 11px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
-
-.card-status {
-display: flex;
-align-items: center;
-}
-
 .card-value {
-font-size: 28px;
-font-weight: bold;
-background: linear-gradient(135deg, #667eea, #764ba2);
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-background-clip: text;
+    font-size: 28px;
+    font-weight: bold;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
-
-/* Footer */
+.metrics-badge {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.metrics-circle {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.95);
+    border-radius: 50%;
+    width: 90px;
+    height: 90px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+.metrics-circle.offline { opacity: 0.5; }
+.metrics-value {
+    font-size: 20px;
+    font-weight: bold;
+    color: #667eea;
+}
+.metrics-label {
+    font-size: 9px;
+    color: #999;
+    text-transform: uppercase;
+}
 .footer {
-text-align: center;
-margin-top: 20px;
-font-size: 10px;
-color: rgba(255, 255, 255, 0.7);
-text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-}
-
-/* Sources connection status bar */
-.sources-status {
-display: flex;
-justify-content: center;
-margin-bottom: 15px;
-}
-
-/* Mobile Optimization */
-@media (max-width: 480px) {
-body { padding: 10px; }
-.night-banner { padding: 10px 15px; margin-bottom: 15px; }
-.night-icon { font-size: 24px; }
-.night-text { font-size: 13px; }
-.metrics-circle { width: 75px; height: 75px; }
-.metrics-value { font-size: 18px; }
-.metrics-label { font-size: 8px; }
-.midnight-section { padding: 12px; margin-bottom: 15px; }
-.card { padding: 15px; margin-bottom: 10px; }
-.card-value { font-size: 24px; }
-.footer { margin-top: 15px; }
+    text-align: center;
+    margin-top: 20px;
+    font-size: 10px;
+    color: rgba(255,255,255,0.7);
 }
 </style>
 </head>
 <body>
 <div class="container">
+    
 
+    <div class="metrics-badge">
+        <div class="metrics-circle ">
+            <div class="metrics-value">41.46k</div>
+            <div class="metrics-label">MatrixScore <span style="color:#4CAF50">●</span></div>
+        </div>
+    </div>
 
-<div class="metrics-badge">
-<div class="metrics-circle ">
-<div class="metrics-value">41.61k</div>
-<div class="metrics-label">MatrixScore</div>
-</div>
-<div class="connection-status connected">
-<svg width="16" height="16" viewBox="0 0 24 24" fill="#4CAF50"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-<span>Online</span>
-</div>
-</div>
+    
+    <div class="card ">
+        <div class="card-header">
+            <span class="card-label">m.pl</span>
+            <span><span style="color:#4CAF50">●</span></span>
+        </div>
+        <div class="card-value">2485994</div>
+    </div>
 
+    <div class="card ">
+        <div class="card-header">
+            <span class="card-label">f.pl</span>
+            <span><span style="color:#4CAF50">●</span></span>
+        </div>
+        <div class="card-value">673838</div>
+    </div>
 
-<div class="sources-status">
-<div class="connection-status connected">
-<svg width="16" height="16" viewBox="0 0 24 24" fill="#4CAF50"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-<span>Dane Online</span>
-</div>
-</div>
+    <div class="card ">
+        <div class="card-header">
+            <span class="card-label">SUMA</span>
+            <span><span style="color:#4CAF50">●</span></span>
+        </div>
+        <div class="card-value">3 159 832</div>
+    </div>
+    
 
-<div class="card source1 ">
-<div class="card-header">
-<div class="card-label">m.pl</div>
-<div class="card-status"><svg width="16" height="16" viewBox="0 0 24 24" fill="#4CAF50"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></div>
-</div>
-<div class="card-value">2472574</div>
-</div>
-
-<div class="card source2 ">
-<div class="card-header">
-<div class="card-label">f.pl</div>
-<div class="card-status"><svg width="16" height="16" viewBox="0 0 24 24" fill="#4CAF50"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></div>
-</div>
-<div class="card-value">670732</div>
-</div>
-
-<div class="card suma ">
-<div class="card-header">
-<div class="card-label">SUMA</div>
-<div class="card-status"><svg width="16" height="16" viewBox="0 0 24 24" fill="#4CAF50"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></div>
-</div>
-<div class="card-value">3 143 306</div>
-</div>
-
-
-
-<div class="midnight-section">
-<div class="section-header">OSTATNI ODCZYT WCZORAJ</div>
-<div class="midnight-content">
-<div class="midnight-date">sob., 31.01, 23:58</div>
-<div class="midnight-values">
-<div class="midnight-item">
-<span class="midnight-label">m.pl</span>
-<span class="midnight-value">840 391</span>
-</div>
-<div class="midnight-item">
-<span class="midnight-label">f.pl</span>
-<span class="midnight-value">805 715</span>
-</div>
-<div class="midnight-sum">
-<span class="midnight-label">SUMA</span>
-<span class="midnight-sum-value">1 646 106</span>
-</div>
-</div>
-</div>
-</div>
-
-<div class="footer">
-Ostatnia aktualizacja: 22:25:54
-</div>
-
-<div style="text-align: center; margin-top: 8px; font-size: 8px; color: rgba(255, 255, 255, 0.3);">
-Pview 4.3 SleepingDog by KaBOOMer
-</div>
+    <div class="footer">
+        Aktualizacja: 22:32:07<br>
+        <small style="opacity:0.5">PViewer v5.0 AutoReload</small>
+    </div>
 </div>
 </body>
 </html>
