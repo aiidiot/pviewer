@@ -69,6 +69,61 @@ body {
     color: #999;
     text-transform: uppercase;
 }
+.connection-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.2);
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 11px;
+    color: white;
+    margin-top: 8px;
+}
+.connection-badge.online { background: rgba(76,175,80,0.3); border: 1px solid rgba(76,175,80,0.5); }
+.connection-badge.offline { background: rgba(136,136,136,0.3); border: 1px solid rgba(136,136,136,0.5); }
+
+/* SEKCJA WCZORAJ */
+.midnight-section {
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 12px;
+    padding: 15px;
+    margin-top: 15px;
+}
+.section-header {
+    font-size: 10px;
+    color: rgba(255,255,255,0.9);
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
+.midnight-date {
+    font-size: 11px;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 10px;
+}
+.midnight-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    margin-bottom: 4px;
+}
+.midnight-label { color: rgba(255,255,255,0.7); }
+.midnight-value { color: #fff; font-weight: 600; }
+.midnight-sum {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(255,255,255,0.2);
+}
+.midnight-sum-value {
+    color: #fff;
+    font-weight: bold;
+    font-size: 14px;
+}
+
 .footer {
     text-align: center;
     margin-top: 20px;
@@ -84,7 +139,16 @@ body {
     <div class="metrics-badge">
         <div class="metrics-circle ">
             <div class="metrics-value">38.65k</div>
-            <div class="metrics-label">MatrixScore <span style="color:#4CAF50">●</span></div>
+            <div class="metrics-label">MatrixScore</div>
+        </div>
+        <div class="connection-badge online">
+            ✓ Online
+        </div>
+    </div>
+
+    <div style="text-align:center;margin-bottom:15px;">
+        <div class="connection-badge online">
+            ✓ Dane Online
         </div>
     </div>
 
@@ -92,31 +156,33 @@ body {
     <div class="card ">
         <div class="card-header">
             <span class="card-label">m.pl</span>
-            <span><span style="color:#4CAF50">●</span></span>
+            <span><span style="color:#4CAF50">✓</span></span>
         </div>
-        <div class="card-value">2514536</div>
+        <div class="card-value">2521432</div>
     </div>
 
     <div class="card ">
         <div class="card-header">
             <span class="card-label">f.pl</span>
-            <span><span style="color:#4CAF50">●</span></span>
+            <span><span style="color:#4CAF50">✓</span></span>
         </div>
-        <div class="card-value">680700</div>
+        <div class="card-value">682373</div>
     </div>
 
     <div class="card ">
         <div class="card-header">
             <span class="card-label">SUMA</span>
-            <span><span style="color:#4CAF50">●</span></span>
+            <span><span style="color:#4CAF50">✓</span></span>
         </div>
-        <div class="card-value">3 195 236</div>
+        <div class="card-value">3 203 805</div>
     </div>
     
 
+    
+
     <div class="footer">
-        Aktualizacja: 22:46:27<br>
-        <small style="opacity:0.5">PViewer v5.0 AutoReload</small>
+        Ostatnia aktualizacja: 22:49:57<br>
+        <small style="opacity:0.5">PViewer v5.0 AutoReload by KaBOOMer</small>
     </div>
 </div>
 </body>
